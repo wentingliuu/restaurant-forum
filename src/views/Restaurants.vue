@@ -16,7 +16,14 @@
     </div>
   
     <!-- Pagination -->
-    
+    <RestaurantsPagination
+        v-if="totalPage.length > 1"
+        :current-page="currentPage"
+        :total-page="totalPage"
+        :category-id="categoryId"
+        :previous-page="previousPage"
+        :next-page="nextPage"
+    />
   </div>
 </template>
 
@@ -24,6 +31,7 @@
 import NavTabs from './../components/NavTabs'
 import RestaurantCard from './../components/RestaurantCard'
 import RestaurantsNavPills from './../components/RestaurantsNavPills'
+import RestaurantsPagination from './../components/RestaurantsPagination'
 
 const dummyData = {
     "restaurants": [
@@ -299,7 +307,8 @@ export default {
   components: {
     NavTabs,
     RestaurantCard,
-    RestaurantsNavPills
+    RestaurantsNavPills,
+    RestaurantsPagination
   },
   data () {
     return {
@@ -335,7 +344,6 @@ export default {
       this.previousPage = prev
       this.nextPage = next
     }
-
   }
 }
 </script>
