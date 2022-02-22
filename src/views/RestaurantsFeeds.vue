@@ -14,8 +14,9 @@
         <NewestRestaurants :restaurants="restaurants"/>
       </div>
       <div class="col-md-6">
-        <!-- 最新評論 NewestComments-->
         <h3>最新評論</h3>
+        <!-- 最新評論 NewestComments -->
+        <NewestComments :comments="comments"/>
       </div>
     </div>
   </div>
@@ -24,6 +25,7 @@
 <script>
 import NavTabs from './../components/NavTabs'
 import NewestRestaurants from './../components/NewestRestaurants.vue'
+import NewestComments from './../components/NewestComments.vue'
 
 const dummyData = {
   'restaurants': [
@@ -224,8 +226,8 @@ const dummyData = {
       'text': 'Placeat velit corrupti laboriosam ex.',
       'UserId': 1,
       'RestaurantId': 21,
-      'createdAt': '2019-07-30T16:24:55.454Z',
-      'updatedAt': '2019-07-30T16:24:55.454Z',
+      'createdAt': '2022-02-22T16:24:55.454Z',
+      'updatedAt': '2022-02-22T16:24:55.454Z',
       'User': {
         'id': 1,
         'name': 'root',
@@ -255,8 +257,8 @@ const dummyData = {
       'text': 'Accusantium repudiandae est hic nihil voluptatem.',
       'UserId': 3,
       'RestaurantId': 24,
-      'createdAt': '2019-07-30T16:24:55.454Z',
-      'updatedAt': '2019-07-30T16:24:55.454Z',
+      'createdAt': '2021-12-30T16:24:55.454Z',
+      'updatedAt': '2021-12-30T16:24:55.454Z',
       'User': {
         'id': 3,
         'name': 'user2',
@@ -286,8 +288,8 @@ const dummyData = {
       'text': 'Voluptatum libero dignissimos unde nulla minus.',
       'UserId': 1,
       'RestaurantId': 18,
-      'createdAt': '2019-07-30T16:24:55.454Z',
-      'updatedAt': '2019-07-30T16:24:55.454Z',
+      'createdAt': '2021-07-30T16:24:55.454Z',
+      'updatedAt': '2021-07-30T16:24:55.454Z',
       'User': {
         'id': 1,
         'name': 'root',
@@ -317,8 +319,8 @@ const dummyData = {
       'text': 'Illum at sed recusandae laboriosam non molestiae ullam similique.',
       'UserId': 3,
       'RestaurantId': 20,
-      'createdAt': '2019-07-30T16:24:55.454Z',
-      'updatedAt': '2019-07-30T16:24:55.454Z',
+      'createdAt': '2020-07-30T16:24:55.454Z',
+      'updatedAt': '2020-07-30T16:24:55.454Z',
       'User': {
         'id': 3,
         'name': 'user2',
@@ -535,7 +537,8 @@ const dummyData = {
 export default {
   components: {
     NavTabs,
-    NewestRestaurants
+    NewestRestaurants,
+    NewestComments
   },
   data () {
     return {
@@ -548,8 +551,9 @@ export default {
   },
   methods: {
     fetchFeeds () {
-      this.restaurants = dummyData.restaurants
-      this.comments = dummyData.comments
+      const { restaurants, comments } = dummyData
+      this.restaurants = restaurants
+      this.comments = comments.filter(comment => comment.Restaurant && comment.text )
     }
   }
 }
