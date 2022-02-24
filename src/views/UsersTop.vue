@@ -100,10 +100,10 @@ export default {
     }
   },
   created () {
-    this.fetchFeeds()
+    this.fetchUsers()
   },
   methods: {
-    fetchFeeds () {
+    fetchUsers () {
       this.users = dummyData.users
     },
     addFollow (targetUser) {
