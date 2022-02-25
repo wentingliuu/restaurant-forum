@@ -8,6 +8,7 @@
     <!-- RestaurantComments -->
     <RestaurantComments
       :restaurant-comments="restaurantComments"
+      @after-delete-comment="afterDeleteComment"
     />
     <!-- CreateComment -->
   </div>
@@ -145,6 +146,11 @@ export default {
       }
 
       this.restaurantComments = Comments
+    },
+    afterDeleteComment (commentId) {
+      this.restaurantComments = this.restaurantComments.filter(
+        comment => comment.id !== commentId
+      )
     }
   }
 }
