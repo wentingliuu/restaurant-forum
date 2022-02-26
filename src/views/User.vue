@@ -10,7 +10,9 @@
     <div class="row">
       <div class="col-md-4">
         <!-- UserFollowingsCard -->
-
+        <UserFollowingsCard
+          :followings="followings"
+        />
         <!-- UserFollowersCard -->
         
       </div>
@@ -26,6 +28,7 @@
 
 <script>
 import UserProfileCard from './../components/UserProfileCard'
+import UserFollowingsCard from './../components/UserFollowingsCard'
 
 const dummyData = {
   'profile': {
@@ -1214,10 +1217,11 @@ const dummyUser = {
 }
 
 export default {
+  name: "User",
   components: {
-    UserProfileCard
+    UserProfileCard,
+    UserFollowingsCard
   },
-  
   data () {
     return {
       user: {
