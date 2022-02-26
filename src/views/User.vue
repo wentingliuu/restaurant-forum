@@ -1,7 +1,11 @@
 <template>
   <div class="container py-5">
-    <h1>User.vue</h1>
     <!-- UserProfileCard -->
+    <UserProfileCard
+      :user="user"
+      :is-current-user="currentUser.id === user.id"
+      :initial-is-followed="isFollowed"
+    />
   
     <div class="row">
       <div class="col-md-4">
@@ -21,6 +25,8 @@
 </template>
 
 <script>
+import UserProfileCard from './../components/UserProfileCard'
+
 const dummyData = {
   'profile': {
     'id': 1,
@@ -1196,7 +1202,22 @@ const dummyData = {
   'isFollowed': false
 }
 
+const dummyUser = {
+  currentUser: {
+    id: 1,
+    name: '管理者',
+    email: 'root@example.com',
+    image: 'https://i.pravatar.cc/300',
+    isAdmin: true
+  },
+  isAuthenticated: true
+}
+
 export default {
+  components: {
+    UserProfileCard
+  },
+  
   data () {
     return {
       user: {
@@ -1213,12 +1234,14 @@ export default {
       followings: [],
       followers: [],
       comments: [],
-      favoritedRestaurants: []
+      favoritedRestaurants: [],
+      currentUser: {}
     }
   },
   created() {
     const { id: userId } = this.$route.params
     this.fetchUser(userId)
+    this.currentUser = dummyUser.currentUser
   },
   methods: {
     fetchUser(userId) {
