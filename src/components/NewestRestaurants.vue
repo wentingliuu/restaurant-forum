@@ -9,9 +9,12 @@
         :key="restaurant.id"
       >
         <h4>
-          <a href="#">{{ restaurant.name }}</a>
-          <small>{{ restaurant.Category ? restaurant.Category.name : '未分類'
- }}</small>
+          <router-link
+            :to="{ name: 'restaurant', params: {id: restaurant.id}}"
+          >
+            {{ restaurant.name }}
+          </router-link>
+          <small>{{ restaurant.Category ? restaurant.Category.name : '未分類' }}</small>
         </h4>
         <p>{{ restaurant.description }}</p>
         {{ restaurant.createdAt | fromNow }}
