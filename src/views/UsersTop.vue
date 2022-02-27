@@ -13,7 +13,7 @@
       >
         <a href="#">
           <img
-            :src="user.image ? user.image : 'http://via.placeholder.com/300x300?text=No+Image'"
+            :src="user.image | emptyImage"
             width="140px"
             height="140px"
           >
@@ -45,6 +45,7 @@
 
 <script>
 import NavTabs from './../components/NavTabs'
+import { emptyImageFilter } from './../utils/mixins'
 
 const dummyData = {
   "users": [
@@ -91,6 +92,7 @@ const dummyData = {
 }
 
 export default {
+  mixins: [emptyImageFilter],
   components: {
     NavTabs
   },
