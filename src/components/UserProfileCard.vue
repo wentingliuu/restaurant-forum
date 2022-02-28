@@ -31,9 +31,15 @@
             </li>
           </ul>
           <template v-if="isCurrentUser">
-            <button class="btn btn-primary">
-              Edit
-            </button>
+            <router-link
+              :to="{
+                name: 'user-edit',
+                params: { id: user.id }
+              }"
+              class="btn btn-primary"
+            >
+            Edit
+            </router-link>
           </template>
           <template v-else>
             <button
