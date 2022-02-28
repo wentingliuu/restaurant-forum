@@ -36,10 +36,14 @@
             Show
           </router-link>
 
-          <a
-            href="#"
+          <router-link 
+            :to="{
+              name:'admin-restaurant-edit',
+              params: { id: restaurant.id }
+            }"
             class="btn btn-link"
-          >Edit</a>
+          >Edit
+          </router-link >
 
           <button
             type="button"
