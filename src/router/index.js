@@ -95,6 +95,11 @@ export default new Router({
       component: () => import('../views/AdminCategories.vue')
     },
     {
+      path: '/admin/users',
+      name: 'admin-users',
+      component: () => import('../views/AdminUsers.vue')
+    },
+    {
       path: '*',
       name: 'not-found',
       component: NotFound
