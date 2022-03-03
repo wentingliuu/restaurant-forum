@@ -181,10 +181,25 @@ export default {
         })
       }
     },
-    deleteCategory (categoryId) {
-      this.categories = this.categories.filter(
+    async deleteCategory (categoryId) {
+      try {
+        const { data } = await adminAPI.categories.delete({
+          categoryId
+        })
+
+        if (data.status === 'error') {
+          throw new Error(data.message)
+        }
+
+        this.categories = this.categories.filter(
         category => category.id !== categoryId
-      )
+        )
+      } catch {
+        Toast.fire({
+          icon: 'error',
+          title: '無法刪除餐廳類別，請稍後再試'
+        })
+      }
     },
     toggleIsEditing (categoryId) {
       this.categories = this.categories.map(category => {
