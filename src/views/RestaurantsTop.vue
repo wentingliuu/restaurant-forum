@@ -85,7 +85,6 @@ export default {
         const { data } = await restaurantsAPI.getTopRestaurants()
         this.restaurants = data.restaurants
       } catch (error) {
-        console.log(error)
         Toast.fire({
           icon: 'error',
           title: '無法取得 TOP10 人氣餐廳，請稍後再試'

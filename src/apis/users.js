@@ -7,7 +7,7 @@ export default {
       headers: { Authorization: `Bearer ${getToken()}` }
     })
   },
-  get ({ userId }) {
+  getUser ({ userId }) {
     return apiHelper.get(`/users/${userId}`, {
       headers: { Authorization: `Bearer ${getToken()}` }
     })
