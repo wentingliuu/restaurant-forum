@@ -14,10 +14,12 @@
         type="button"
         class="btn btn-link"
         @click="$router.back()"
-      >回上一頁</button>
+      >回上一頁
+      </button>
       <button
         type="submit"
         class="btn btn-primary mr-0"
+        :disabled="isProcessing"
       >
         Submit
       </button>
@@ -26,28 +28,64 @@
 </template>
 
 <script>
-import { v4 as uuidv4 } from "uuid"
+import commentsAPI from './../apis/comments'
+import { Toast } from './../utils/helpers'
+import { mapState } from 'vuex'
 
 export default {
-  data () {
-    return {
-      text: ''
-    }
-  },
+  name: 'CreateComment',
   props: {
     restaurantId: {
       type: Number,
       required: true
     }
   },
+  data () {
+    return {
+      text: '',
+      isProcessing: false
+    }
+  },
+  computed: {
+    ...mapState(['currentUser'])
+  },
   methods: {
-    handleSubmit () {
-      this.$emit('after-create-comment', {
-        commentId: uuidv4(),
-        restaurantId: this.restaurantId,
-        text: this.text
-      })
-      this.text = ''
+    async handleSubmit () {
+      try {
+        if (!this.text) {
+          Toast.fire({
+            icon: 'warning',
+            title: '您尚未填寫任何評論'
+          })
+          return
+        }
+
+        this.isProcessing = true
+        const { data } = await commentsAPI.create({ 
+          UserId: this.currentUser.id, 
+          restaurantId: this.restaurantId,
+          text: this.text
+        })
+        
+        if (data.status === 'error') {
+          throw new Error(data.message)
+        }
+
+        this.$emit('after-create-comment', {
+          commentId: data.commentId,
+          restaurantId: this.restaurantId,
+          text: this.text
+        })
+        
+        this.isProcessing = false
+        this.text = ''
+      } catch {
+        this.isProcessing = false
+        Toast.fire({
+          icon: 'error',
+          title: '無法新增餐廳資料，請稍後再試'
+        })
+      }
     }
   }
 }
