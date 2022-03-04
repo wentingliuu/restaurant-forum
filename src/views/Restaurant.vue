@@ -22,99 +22,9 @@
 import RestaurantDetail from './../components/RestaurantDetail'
 import RestaurantComments from './../components/RestaurantComments'
 import CreateComment from './../components/CreateComment'
-
-const dummyData = {
-  "restaurant": {
-    "id": 1,
-    "name": "Kailee Little",
-    "tel": "1-658-340-0490 x85134",
-    "address": "39791 Lubowitz Forges",
-    "opening_hours": "08:00",
-    "description": "Consequatur doloremque sint sit ut non. Assumenda incidunt odio quidem quia aliquam natus ea molestiae nihil. Velit eius distinctio. Explicabo nam iste doloribus et voluptas possimus qui minus aut. Ut placeat quia quasi error voluptatibus ea. Et fuga atque dignissimos repellat consequatur qui.",
-    "image": "https://loremflickr.com/320/240/restaurant,food/?random=33.995012181224695",
-    "viewCounts": 1,
-    "createdAt": "2022-02-16T16:32:50.000Z",
-    "updatedAt": "2022-02-24T08:17:39.431Z",
-    "CategoryId": 1,
-    "Category": {
-        "id": 1,
-        "name": "中式料理",
-        "createdAt": "2022-02-16T16:32:50.000Z",
-        "updatedAt": "2022-02-16T16:32:50.000Z"
-    },
-    "FavoritedUsers": [],
-    "LikedUsers": [],
-    "Comments": [
-        {
-            "id": 101,
-            "text": "Expedita ut commodi cumque similique.",
-            "UserId": 2,
-            "RestaurantId": 1,
-            "createdAt": "2022-02-16T16:32:50.000Z",
-            "updatedAt": "2022-02-16T16:32:50.000Z",
-            "User": {
-                "id": 2,
-                "name": "user1",
-                "email": "user1@example.com",
-                "password": "$2a$10$kAU7v6.uThW1PC76HIISVOYOkY2ov.oSRDR.hpx.hrDD1Gev2sAyO",
-                "isAdmin": false,
-                "image": null,
-                "createdAt": "2022-02-16T16:32:50.000Z",
-                "updatedAt": "2022-02-16T16:32:50.000Z"
-            }
-        },
-        {
-            "id": 51,
-            "text": "Quia aut eum.",
-            "UserId": 2,
-            "RestaurantId": 1,
-            "createdAt": "2022-02-16T16:32:50.000Z",
-            "updatedAt": "2022-02-16T16:32:50.000Z",
-            "User": {
-                "id": 2,
-                "name": "user1",
-                "email": "user1@example.com",
-                "password": "$2a$10$kAU7v6.uThW1PC76HIISVOYOkY2ov.oSRDR.hpx.hrDD1Gev2sAyO",
-                "isAdmin": false,
-                "image": null,
-                "createdAt": "2022-02-16T16:32:50.000Z",
-                "updatedAt": "2022-02-16T16:32:50.000Z"
-            }
-        },
-        {
-            "id": 1,
-            "text": "Omnis accusamus necessitatibus delectus culpa asperiores quibusdam.",
-            "UserId": 3,
-            "RestaurantId": 1,
-            "createdAt": "2022-02-16T16:32:50.000Z",
-            "updatedAt": "2022-02-16T16:32:50.000Z",
-            "User": {
-                "id": 3,
-                "name": "user2",
-                "email": "user2@example.com",
-                "password": "$2a$10$zb8.59Blk6CI48UgggU4V.MccMbEBEdIZk/L4miDS0NN5dVRKL.qa",
-                "isAdmin": false,
-                "image": null,
-                "createdAt": "2022-02-16T16:32:50.000Z",
-                "updatedAt": "2022-02-16T16:32:50.000Z"
-            }
-        }
-    ]
-  },
-  "isFavorited": false,
-  "isLiked": false
-}
-
-const dummyUser = {
-  currentUser: {
-    id: 1,
-    name: 'Admin',
-    email: 'root@example.com',
-    image: 'https://i.pravatar.cc/300',
-    isAdmin: true
-  },
-  isAuthenticated: true
-}
+import restaurantsAPI from './../apis/restaurants'
+import { Toast } from './../utils/helpers'
+import { mapState } from 'vuex'
 
 export default {
   components: {
@@ -136,34 +46,58 @@ export default {
         isFavorited: false,
         isLiked: false
       },
-      currentUser: dummyUser.currentUser,
       restaurantComments: []
     }
+  },
+  computed: {
+    ...mapState(['currentUser'])
+  },
+  beforeRouteUpdate (to, from, next) {
+    const { id: restaurantId } = to.params
+    this.fetchRestaurant(restaurantId)
+    next()
   },
   created () {
     const { id: restaurantId } = this.$route.params
     this.fetchRestaurant(restaurantId)
   },
   methods: {
-    fetchRestaurant (restaurantId) {
-      console.log('fetchRestaurant id: ', restaurantId)
-      const { restaurant, isFavorited, isLiked } = dummyData
-      const { id, name, Category, image, opening_hours:openingHours, tel, address, description, Comments } = restaurant
+    async fetchRestaurant (restaurantId) {
+      try {
+        const { data } = await restaurantsAPI.getRestaurant({ restaurantId })
+        const { restaurant, isFavorited, isLiked } = data
+        const {
+          id,
+          name,
+          Category,
+          image,
+          opening_hours: openingHours,
+          tel,
+          address,
+          description,
+          Comments
+        } = restaurant
 
-      this.restaurant = {
-        id,
-        name,
-        categoryName: Category.name,
-        image,
-        openingHours,
-        tel,
-        address,
-        description,
-        isFavorited,
-        isLiked,
+        this.restaurant = {
+          id,
+          name,
+          categoryName: Category ? Category.name : '未分類',
+          image,
+          openingHours,
+          tel,
+          address,
+          description,
+          isFavorited,
+          isLiked
+        }
+
+        this.restaurantComments = Comments
+      } catch (error) {
+        Toast.fire({
+          icon: 'error',
+          title: '無法取得餐廳資料，請稍後再試'
+        })
       }
-
-      this.restaurantComments = Comments
     },
     afterDeleteComment (commentId) {
       this.restaurantComments = this.restaurantComments.filter(
