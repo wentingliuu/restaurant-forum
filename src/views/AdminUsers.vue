@@ -38,7 +38,7 @@
               v-if="user.id !== currentUser.id"
               type="button"
               class="btn btn-link"
-              @click.stop.prevent="toggleUserRole(user.id)"
+              @click.stop.prevent="toggleUserRole(user.id, user.isAdmin)"
             >
               {{ user.isAdmin ? 'set as user' : 'set as admin' }}
             </button>
@@ -51,52 +51,9 @@
 
 <script>
 import AdminNav from './../components/AdminNav'
-
-const dummyData = {
-  "users": [
-    {
-        "id": 1,
-        "name": "root",
-        "email": "root@example.com",
-        "password": "$2a$10$3G1NR/0UaujsPqypobU/5emL1FrxqS.J6W7T2qco2bR349c5JtdX2",
-        "isAdmin": true,
-        "image": null,
-        "createdAt": "2022-02-16T16:32:50.000Z",
-        "updatedAt": "2022-02-16T16:32:50.000Z"
-    },
-    {
-        "id": 2,
-        "name": "user1",
-        "email": "user1@example.com",
-        "password": "$2a$10$kAU7v6.uThW1PC76HIISVOYOkY2ov.oSRDR.hpx.hrDD1Gev2sAyO",
-        "isAdmin": false,
-        "image": null,
-        "createdAt": "2022-02-16T16:32:50.000Z",
-        "updatedAt": "2022-02-16T16:32:50.000Z"
-    },
-    {
-        "id": 3,
-        "name": "user2",
-        "email": "user2@example.com",
-        "password": "$2a$10$zb8.59Blk6CI48UgggU4V.MccMbEBEdIZk/L4miDS0NN5dVRKL.qa",
-        "isAdmin": false,
-        "image": null,
-        "createdAt": "2022-02-16T16:32:50.000Z",
-        "updatedAt": "2022-02-16T16:32:50.000Z"
-    }
-  ]
-}
-
-const dummyUser = {
-  currentUser: {
-    id: 1,
-    name: 'Admin',
-    email: 'root@example.com',
-    image: 'https://i.pravatar.cc/300',
-    isAdmin: true
-  },
-  isAuthenticated: true
-}
+import adminAPI from './../apis/admin'
+import { Toast } from './../utils/helpers'
+import { mapState } from 'vuex'
 
 export default {
   name: 'AdminUsers',
@@ -105,27 +62,58 @@ export default {
   },
   data() {
     return {
-      users: [],
-      currentUser: dummyUser.currentUser
+      users: []
     }
+  },
+  computed: {
+    ...mapState(['currentUser'])
   },
   created () {
     this.fetchUsers()
   },
   methods: {
-    fetchUsers() {
-      this.users = dummyData.users
-    },
-    toggleUserRole(userId) {
-      this.users = this.users.map(user => {
-        if (user.id === userId) {
-          return {
-            ...user,
-            isAdmin: !user.isAdmin
-          }
+    async fetchUsers() {
+      try {
+        const { data, statusText } = await adminAPI.users.get()
+
+        if (statusText !== 'OK') {
+          throw new Error(statusText)
         }
-        return user
-      })
+        
+        this.users = data.users
+      } catch {
+        Toast.fire({
+          icon: 'error',
+          title: '無法取得用戶清單，請稍後再試'
+        })
+      }
+    },
+    async toggleUserRole (userId, isAdmin) {
+      try {
+        const { data } = await adminAPI.users.update({
+          userId,
+          isAdmin: (!isAdmin).toString(),
+        })
+
+        if (data.status !== 'success') {
+          throw new Error(data.message)
+        }
+
+        this.users = this.users.map(user => {
+          if (user.id === userId) {
+            return {
+              ...user,
+              isAdmin: !isAdmin
+            }
+          }
+          return user
+        })
+      } catch {
+        Toast.fire({
+          icon: 'error',
+          title: '無法更新會員角色，請稍後再試'
+        })
+      }
     }
   }
 }
