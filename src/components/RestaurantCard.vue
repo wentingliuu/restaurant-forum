@@ -141,18 +141,18 @@ export default {
       try {
         const { data } = await usersAPI.deleteLike({ restaurantId })
 
-        if (data.status !== 'success') {
+        if (data.status === 'error') {
           throw new Error(data.message)
         }
 
         this.restaurant = {
           ...this.restaurant,
-          isFavorited: true
+          isLiked: false
         }
       } catch (error) {
         Toast.fire({
           icon: 'error',
-          title: '無法對取消讚，請稍後再試'
+          title: '無法取消按讚，請稍後再試'
         })
       }
     }
