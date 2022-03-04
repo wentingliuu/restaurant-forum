@@ -36,25 +36,17 @@
         type="submit"
         class="btn btn-primary"
       >
-        Submit
+        {{ isProcessing ? "資料更新中..." : "Submit" }}
       </button>
     </form>
   </div>
 </template>
 
 <script>
+import usersAPI from './../apis/users'
+import { Toast } from './../utils/helpers'
+import { mapState } from 'vuex'
 import { emptyImageFilter } from './../utils/mixins'
-
-const dummyData = {
-  "profile": {
-      "id": 3,
-      "name": "user2",
-      "email": "user2@example.com",
-      "password": "$2a$10$zb8.59Blk6CI48UgggU4V.MccMbEBEdIZk/L4miDS0NN5dVRKL.qa",
-      "isAdmin": false,
-      "image": null
-  }
-}
 
 export default {
   mixins: [emptyImageFilter],
@@ -65,17 +57,38 @@ export default {
         name: '',
         email: '',
         image: '',
-      }
+      },
+      isProcessing: false
+    }
+  },
+  computed: {
+    ...mapState(['currentUser'])
+  },
+  watch: {
+    currentUser () {
+      this.setUser()
     }
   },
   created () {
     const { id } = this.$route.params
-    this.fetchUser(id)
+    if (id.toString() !== this.currentUser.id.toString()) {
+      this.$router.push({ name: 'not-found' })
+      return
+    }
+    this.setUser()
+  },
+  beforeRouteUpdate (to, from, next) {
+    const { id } = to.params
+    if (id.toString() !== this.currentUser.id.toString()) {
+      this.$router.push({ name: 'not-found' })
+      return
+    }
+    this.setUser()
+    next()
   },
   methods: {
-    fetchUser (userId) {
-      console.log('fetchUser id:', userId)
-      const { id, name, email, image } = dummyData.profile
+    setUser () {
+      const { id, name, email, image } = this.currentUser
       this.user = {
         ...this.user,
         id,
@@ -96,12 +109,36 @@ export default {
         this.user.image = imageURL
       }
     },
-    handleSubmit (e) {
+    async handleSubmit (e) {
+      if (!this.user.name) {
+        Toast.fire({
+          icon: 'warning',
+          title: '您尚未填寫姓名'
+        })
+        return
+      }
+
       const form = e.target
       const formData = new FormData(form)
-      // 透過 API 將表單資料送到伺服器
-      for (let [name, value] of formData.entries()) {
-        console.log(name + ': ' + value)
+
+      try {
+        this.isProcessing = true
+        const { data } = await usersAPI.update({
+          userId: this.user.id,
+          formData
+        })
+
+        if (data.status !== "success") {
+          throw new Error(data.message)
+        }
+
+        this.$router.push({ name: 'user', params: { id: this.user.id } })
+      } catch {
+        this.isProcessing = false
+        Toast.fire({
+          icon: 'error',
+          title: '無法更新使用者資料，請稍後再試'
+        })
       }
     }
   }
