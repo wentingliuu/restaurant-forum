@@ -30,10 +30,12 @@
             <p class="card-text">
               {{ restaurant.description }}
             </p>
-            <a
+            <router-link
+              :to="{ name: 'restaurant-dashboard', params: {id: restaurant.id}}"
               href="#"
               class="btn btn-primary mr-2"
-            >Show</a>
+            >Show
+            </router-link>
 
             <button
               v-if="restaurant.isFavorited"
