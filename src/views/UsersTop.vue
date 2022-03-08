@@ -20,6 +20,7 @@
               :src="user.image | emptyImage"
               width="140px"
               height="140px"
+              style="object-fit: cover;"
             >
           </router-link>
           <h2>{{ user.name }}</h2>
@@ -36,7 +37,7 @@
             <button
               v-else
               type="button"
-              class="btn btn-sm btn-primary"
+              class="btn btn-sm btn-border"
               @click.stop.prevent="addFollowing(user.id)"
             >
               追蹤

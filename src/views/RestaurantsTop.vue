@@ -14,17 +14,19 @@
         style="max-width: 540px;margin: auto;"
       >
         <div class="row no-gutters">
-          <div class="col-md-4">
+          <div class="col-md-5">
             <router-link
               :to="{ name: 'restaurant', params: { id: restaurant.id } }"
             >
               <img
                 class="card-img"
+                height="195px"
+                style="object-fit: cover;"
                 :src="restaurant.image | emptyImage"
               >
             </router-link>
           </div>
-          <div class="col-md-8">
+          <div class="col-md-7">
             <div class="card-body">
               <h5 class="card-title">
                 {{ restaurant.name }}
@@ -53,7 +55,7 @@
               <button
                 v-else
                 type="button"
-                class="btn btn-primary"
+                class="btn btn-border"
                 @click.stop.prevent="addFavorite(restaurant.id)"
               >
                 加到最愛

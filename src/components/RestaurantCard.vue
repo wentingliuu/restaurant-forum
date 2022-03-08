@@ -29,7 +29,7 @@
         <button
           v-if="restaurant.isFavorited"
           type="button"
-          class="btn btn-sm btn-danger btn-border favorite mr-2"
+          class="btn btn-sm btn-danger favorite mr-2"
           :disabled="isProcessing"
           @click.stop.prevent="deleteFavorite(restaurant.id)"
         >
@@ -38,7 +38,7 @@
         <button
           v-else
           type="button"
-          class="btn btn-sm btn-primary btn-border favorite mr-2"
+          class="btn btn-sm btn-border favorite mr-2"
           :disabled="isProcessing"
           @click.stop.prevent="addFavorite(restaurant.id)"
         >
@@ -56,7 +56,7 @@
         <button
           v-else
           type="button"
-          class="btn btn-sm btn-primary like mr-2"
+          class="btn btn-sm btn-border like mr-2"
           :disabled="isProcessing"
           @click.stop.prevent="addLike(restaurant.id)"
         >
@@ -201,6 +201,7 @@ export default {
 }
 .card-img-top {
   background-color: #EFEFEF;
+  object-fit: cover;
 }
 
 .card-body {
