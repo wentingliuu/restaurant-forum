@@ -1,20 +1,23 @@
 <template>
   <div class="container py-5">
-    <!-- RestaurantDetail -->
-    <RestaurantDetail
-      :initial-restaurant="restaurant"
-    />
-    <hr>
-    <!-- RestaurantComments -->
-    <RestaurantComments
-      :restaurant-comments="restaurantComments"
-      @after-delete-comment="afterDeleteComment"
-    />
-    <!-- CreateComment -->
-    <CreateComment
-      :restaurant-id="restaurant.id"
-      @after-create-comment="afterCreateComment"
-    />
+    <Spinner v-if="isLoading" />
+    <template v-else>
+      <!-- RestaurantDetail -->
+      <RestaurantDetail
+        :initial-restaurant="restaurant"
+      />
+      <hr>
+      <!-- RestaurantComments -->
+      <RestaurantComments
+        :restaurant-comments="restaurantComments"
+        @after-delete-comment="afterDeleteComment"
+      />
+      <!-- CreateComment -->
+      <CreateComment
+        :restaurant-id="restaurant.id"
+        @after-create-comment="afterCreateComment"
+      />
+    </template>
   </div>
 </template>
 
@@ -22,6 +25,7 @@
 import RestaurantDetail from './../components/RestaurantDetail'
 import RestaurantComments from './../components/RestaurantComments'
 import CreateComment from './../components/CreateComment'
+import Spinner from './../components/Spinner.vue'
 import restaurantsAPI from './../apis/restaurants'
 import { Toast } from './../utils/helpers'
 import { mapState } from 'vuex'
@@ -30,7 +34,8 @@ export default {
   components: {
     RestaurantDetail,
     RestaurantComments,
-    CreateComment
+    CreateComment,
+    Spinner
   },
   data () {
     return {
@@ -46,7 +51,8 @@ export default {
         isFavorited: false,
         isLiked: false
       },
-      restaurantComments: []
+      restaurantComments: [],
+      isLoading: true
     }
   },
   computed: {
@@ -64,6 +70,7 @@ export default {
   methods: {
     async fetchRestaurant (restaurantId) {
       try {
+        this.isLoading = true
         const { data } = await restaurantsAPI.getRestaurant({ restaurantId })
         const { restaurant, isFavorited, isLiked } = data
         const {
@@ -92,7 +99,9 @@ export default {
         }
 
         this.restaurantComments = Comments
+        this.isLoading = false
       } catch (error) {
+        this.isLoading = false
         Toast.fire({
           icon: 'error',
           title: '無法取得餐廳資料，請稍後再試'

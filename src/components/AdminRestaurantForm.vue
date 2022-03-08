@@ -1,6 +1,7 @@
 <template>
+  <Spinner v-if="isLoading" />
   <form
-    v-show="!isLoading"
+    v-else
     @submit.stop.prevent="handleSubmit"
   >
     <div class="form-group">
@@ -119,6 +120,7 @@
 
 <script>
 import adminAPI from './../apis/admin'
+import Spinner from './../components/Spinner'
 import { Toast } from './../utils/helpers'
 
 export default {
@@ -142,6 +144,9 @@ export default {
   },
   data () {
     return {
+      components: {
+        Spinner
+      },
       restaurant: {
         name: '',
         categoryId: '',

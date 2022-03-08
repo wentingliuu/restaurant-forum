@@ -24,8 +24,9 @@
         </div>
       </div>
     </form>
-    <table 
-      v-show="!isLoading"
+    <Spinner v-if="isLoading" />
+    <table
+      v-else
       class="table"
     >
       <thead class="thead-dark">
@@ -110,11 +111,13 @@
 <script>
 import AdminNav from './../components/AdminNav'
 import adminAPI from './../apis/admin'
+import Spinner from './../components/Spinner'
 import { Toast } from './../utils/helpers'
 
 export default {
   components: {
-    AdminNav
+    AdminNav,
+    Spinner
   },
   data () {
     return {
