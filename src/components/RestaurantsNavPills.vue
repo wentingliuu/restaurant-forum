@@ -54,7 +54,7 @@ export default {
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
   border-width: 2px;
-  border-color: #bd2333;
+  border-color: var(--main-color);
   background-color: transparent;
 }
 </style>

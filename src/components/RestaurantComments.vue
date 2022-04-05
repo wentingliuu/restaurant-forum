@@ -12,7 +12,7 @@
         <button
           v-if="currentUser.isAdmin"
           type="button"
-          class="btn btn-danger float-right"
+          class="btn float-right"
           @click.stop.prevent="handleDeleteButtonClick(comment.id)"
         >
           Delete

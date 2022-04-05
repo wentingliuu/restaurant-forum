@@ -29,7 +29,7 @@
         <button
           v-if="restaurant.isFavorited"
           type="button"
-          class="btn btn-sm btn-danger favorite mr-2"
+          class="btn btn-sm favorite mr-2"
           :disabled="isProcessing"
           @click.stop.prevent="deleteFavorite(restaurant.id)"
         >
@@ -47,7 +47,7 @@
         <button
           v-if="restaurant.isLiked"
           type="button"
-          class="btn btn-sm btn-danger like mr-2"
+          class="btn btn-sm like mr-2"
           :disabled="isProcessing"
           @click.stop.prevent="deleteLike(restaurant.id)"
         >
@@ -187,7 +187,7 @@ export default {
 .badge.badge-secondary {
   padding: 0;
   margin: 8px 0;
-  color: #bd2333;
+  color: var(--main-color);
   background-color: transparent;
 }
 

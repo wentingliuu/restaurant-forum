@@ -38,7 +38,7 @@
                 {{ restaurant.description }}
               </p>
               <router-link
-                class="btn btn-primary mr-2"
+                class="btn mr-2"
                 :to="{ name: 'restaurant', params: { id: restaurant.id } }"
               >
                 Show
@@ -47,7 +47,7 @@
               <button
                 v-if="restaurant.isFavorited"
                 type="button"
-                class="btn btn-danger mr-2"
+                class="btn mr-2"
                 @click.stop.prevent="deleteFavorite(restaurant.id)"
               >
                 移除最愛

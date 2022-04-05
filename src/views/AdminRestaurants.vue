@@ -5,7 +5,7 @@
 
     <router-link
       to="/admin/restaurants/new"
-      class="btn btn-primary mb-4"
+      class="btn mb-4"
     >
       New Restaurant
     </router-link>

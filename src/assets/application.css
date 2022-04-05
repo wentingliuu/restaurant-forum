@@ -9,13 +9,18 @@
   outline: none;
 }
 
+:root {
+  --main-color: #2e406f;
+  --second-color: #3434ff;
+}
+
 a {
-  color: #bd2333;
+  color: var(--main-color);
   transition: all 0.3s ease-in-out;
 }
 
 a:hover {
-  color: #bd2333;
+  color: var(--main-color);
 }
 
 .table td,
@@ -41,47 +46,35 @@ a:hover {
   padding: 7px 14px;
   font-size: 14px;
   color: white;
-  background-color: #bd2333;
-  border: 2px solid #bd2333;
+  background-color: var(--main-color);
+  border: 2px solid var(--main-color);
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 .btn-border,
-.btn:hover,
-.btn-primary:hover {
-  background: transparent;
-  color: #bd2333;
+.btn:hover {
+  color: white;
+  background-color: var(--second-color);
   text-decoration: none;
-  border: 2px solid #bd2333;
+  border: 2px solid var(--second-color);
 }
 
 .btn:focus {
   box-shadow: none;
 }
 
-.btn-primary:not(:disabled):not(.disabled).active,
-.btn-primary:not(:disabled):not(.disabled):active,
-.show > .btn-primary.dropdown-toggle {
-  border: 2px solid #bd2333;
-  color: #bd2333;
-  background: transparent;
-}
-
-.btn-primary.disabled, .btn-primary:disabled {
-  color: #fff;
-  background-color: #bd2333;
-  border-color: #bd2333;
-}
-
-.btn-outline-success {
+.btn-outline {
   border-color: white;
   border-width: 1px;
 }
 
-.btn-outline-success:hover {
+.btn-outline:hover,
+.btn-outline:focus,
+.btn-outline:active {
   color: rgba(255, 255, 255, 0.85);
-  border-color: rgba(255, 255, 255, 0.85);
+  background-color: #3434ff80;
+  border-color: white;
   border-width: 1px;
 }
 
@@ -119,7 +112,7 @@ h1,
 }
 
 .card-text a:hover {
-  color: #bd2333;
+  color: var(--main-color);
 }
 
 .swal2-popup.swal2-toast {

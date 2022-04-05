@@ -43,7 +43,7 @@
           </router-link>
           <button
             type="button"
-            class="btn btn-sm btn-outline-success my-2 my-sm-0"
+            class="btn btn-sm btn-outline my-2 my-sm-0"
             @click="logout"
           >
             登出
@@ -78,11 +78,11 @@ export default {
 
   nav.bg-dark {
     padding: 14px 16px;
-    background-color: #bd2333 !important;
+    background-color: var(--main-color) !important;
   }
 
   .navbar-brand {
     font-size: 19px;
     padding: 0;
-}
+  }
 </style>

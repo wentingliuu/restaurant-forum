@@ -110,7 +110,7 @@
 
     <button
       type="submit"
-      class="btn btn-primary"
+      class="btn"
       :disabled="isProcessing"
     >
       {{ isProcessing ? "處理中..." : "送出" }}

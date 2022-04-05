@@ -34,7 +34,7 @@
 
       <button
         type="submit"
-        class="btn btn-primary"
+        class="btn"
       >
         {{ isProcessing ? "資料更新中..." : "Submit" }}
       </button>

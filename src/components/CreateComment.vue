@@ -18,7 +18,7 @@
       </button>
       <button
         type="submit"
-        class="btn btn-primary mr-0"
+        class="btn mr-0"
         :disabled="isProcessing"
       >
         Submit

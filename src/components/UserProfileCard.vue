@@ -36,7 +36,7 @@
                 name: 'user-edit',
                 params: { id: user.id }
               }"
-              class="btn btn-primary"
+              class="btn"
             >
             Edit
             </router-link>
@@ -45,7 +45,7 @@
             <button
               v-if="isFollowed"
               type="button"
-              class="btn btn-danger"
+              class="btn"
               @click.stop.prevent="deleteFollowing(user.id)"
             >
               取消追蹤
@@ -53,7 +53,7 @@
             <button
               v-else
               type="button"
-              class="btn btn-primary"
+              class="btn"
               @click.stop.prevent="addFollowing(user.id)"
             >
               追蹤

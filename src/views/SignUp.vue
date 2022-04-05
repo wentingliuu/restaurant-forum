@@ -65,7 +65,7 @@
       </div>
 
       <button
-        class="btn btn-lg btn-primary btn-block mb-3"
+        class="btn btn-lg btn-block mb-3"
         type="submit"
         :disabled="isProcessing"
       >

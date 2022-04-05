@@ -29,7 +29,7 @@
             <button
               v-if="user.isFollowed"
               type="button"
-              class="btn btn-sm btn-danger"
+              class="btn btn-sm"
               @click.stop.prevent="deleteFollowing(user.id)"
             >
               取消追蹤
