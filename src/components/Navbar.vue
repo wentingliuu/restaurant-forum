@@ -43,7 +43,7 @@
           </router-link>
           <button
             type="button"
-            class="btn btn-sm btn-outline my-2 my-sm-0"
+            class="btn btn-sm btn-nav my-2 my-sm-0"
             @click="logout"
           >
             登出

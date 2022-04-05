@@ -33,7 +33,7 @@
       <p>{{ restaurant.description }}</p>
       <router-link
         :to="{ name: 'restaurant-dashboard', params: {id: restaurant.id}}"
-        class="btn btn-border mr-2"
+        class="btn mr-2"
       >
         Dashboard
       </router-link>
