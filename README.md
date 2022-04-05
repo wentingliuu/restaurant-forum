@@ -7,10 +7,10 @@ A restaurant forum web application built with [Vue.js](https://vuejs.org/) and [
 
 🌟 To try this project, you could use the dummy data to login.
 
-| Email              | Password |
-| -------------------| ---------|
-| root@example.com   | 12345678 |
-| user1@example.com  | 12345678 |
+| Email              | Password | Role |
+| -------------------| ---------| -----|
+| root@example.com   | 12345678 | Admin|
+| user1@example.com  | 12345678 | User |
 
 
 
@@ -22,3 +22,11 @@ A restaurant forum web application built with [Vue.js](https://vuejs.org/) and [
 
 
 ## Screenshots
+#### RESTAURANT MAIN PAGE
+![main page](https://github.com/wentingliuu/restaurant-forum/blob/main/src/assets/restaurant-tabs.gif)
+
+#### BACK STAGE
+![back stage](https://github.com/wentingliuu/restaurant-forum/blob/main/src/assets/restaurant-backstage.gif)
+
+#### INTERACTION (LEAVE COMMENT)
+![back stage](https://github.com/wentingliuu/restaurant-forum/blob/main/src/assets/restaurant-comment.gif)
