@@ -5,7 +5,7 @@ A restaurant forum web application built with [Vue.js](https://vuejs.org/) and [
 
 🌟 RESTful API provided by ALPHACamp, [Click Here](https://github.com/ALPHACamp/forum-express/blob/master/routes/apis.js) to see the api routes.
 
-🌟 To try this project, you could use the dummy data to login.
+🌟 To try this project, you could use the **dummy data** to login.
 
 | Email              | Password | Role |
 | -------------------| ---------| -----|
